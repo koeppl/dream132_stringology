@@ -1,0 +1,2 @@
+# stringology
+String processing algorithms
