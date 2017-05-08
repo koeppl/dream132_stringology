@@ -15,7 +15,26 @@ vector<int> MPPreprocess(const string &pattern){
 	return next_table;
 }
 
-vector<int> MPMatching(const string& text, const string& pattern, const vector<int> &next_table){
+vector<int> KMPPreprocess(const string & pattern){
+	vector<int> next_table(pattern.size() + 1, 0);
+	next_table[0] = -1;
+	next_table[1] = 0;
+	int j = 0;
+	for(int i = 2;i <= pattern.size();i++){
+		while(j > -1 && pattern[i - 1] != pattern[j]){
+			j = next_table[j];
+		}
+		j++;
+		if(i < pattern.size() && pattern[i] == pattern[j]){
+			next_table[i] = next_table[j];
+		} else{
+			next_table[i] = j;
+		}
+	}
+	return next_table;
+}
+
+vector<int> matching(const string& text, const string& pattern, const vector<int> &next_table){
 	vector<int> occ;
 	int j = 0;
 	for(int i = 0;i < text.size();i++){
