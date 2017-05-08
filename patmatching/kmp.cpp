@@ -6,20 +6,20 @@ vector<int> MPPreprocess(const string &pattern){
 	next_table[1] = 0;
 	int j = 0;
 	for(int i = 2;i <= pattern.size();i++){
-		while(j > -1 && pattern[i] != pattern[j]){
+		while(j > -1 && pattern[i-1] != pattern[j]){
 			j = next_table[j];
 		}
 		j++;
 		next_table[i] = j;
 	}
-
+	return next_table;
 }
 
-vector<int> MPMatching(const string& text, const string& pattern, const vector<int> next_table){
+vector<int> MPMatching(const string& text, const string& pattern, const vector<int> &next_table){
 	vector<int> occ;
 	int j = 0;
 	for(int i = 0;i < text.size();i++){
-		while(i > -1 && text[i] != pattern[j]){
+		while(j > -1 && text[i] != pattern[j]){
 			j = next_table[j];
 		}
 		j++;
