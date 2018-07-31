@@ -1,50 +1,71 @@
 #include "kmp.h"
 
-vector<int> MPPreprocess(const string &pattern){
-	vector<int> next_table(pattern.size() + 1, 0);
-	next_table[0] = -1;
-	next_table[1] = 0;
-	int j = 0;
-	for(int i = 2;i <= pattern.size();i++){
-		while(j > -1 && pattern[i-1] != pattern[j]){
-			j = next_table[j];
-		}
-		j++;
-		next_table[i] = j;
-	}
-	return next_table;
-}
+KMP::KMP(){}
 
-vector<int> KMPPreprocess(const string & pattern){
-	vector<int> next_table(pattern.size() + 1, 0);
-	next_table[0] = -1;
-	next_table[1] = 0;
+KMP::KMP(const string &p){
+	pattern = p;
+	shift.resize(p.size() + 1, 0);
+	shift[0] = -1;
+	shift[1] = 0;
 	int j = 0;
-	for(int i = 2;i <= pattern.size();i++){
-		while(j > -1 && pattern[i - 1] != pattern[j]){
-			j = next_table[j];
+	for(int i = 2;i <= p.size();i++){
+		while(j > -1 && p[i - 1] != p[j]){
+			j = shift[j];
 		}
 		j++;
-		if(i < pattern.size() && pattern[i] == pattern[j]){
-			next_table[i] = next_table[j];
+		if(i < pattern.size() && p[i] == p[j]){
+			shift[i] = shift[j];
 		} else{
-			next_table[i] = j;
+			shift[i] = j;
 		}
 	}
-	return next_table;
 }
 
-vector<int> matching(const string& text, const string& pattern, const vector<int> &next_table){
+void KMP::MPPreprocess(const string &p){
+	pattern = p;
+	shift.resize(p.size() + 1, 0);
+	shift[0] = -1;
+	shift[1] = 0;
+	int j = 0;
+	for(int i = 2;i <= p.size();i++){
+		while(j > -1 && p[i-1] != p[j]){
+			j = shift[j];
+		}
+		j++;
+		shift[i] = j;
+	}
+}
+
+void KMP::KMPPreprocess(const string &p){
+	pattern = p;
+	shift.resize(p.size() + 1, 0);
+	shift[0] = -1;
+	shift[1] = 0;
+	int j = 0;
+	for(int i = 2;i <= p.size();i++){
+		while(j > -1 && p[i - 1] != p[j]){
+			j = shift[j];
+		}
+		j++;
+		if(i < pattern.size() && p[i] == p[j]){
+			shift[i] = shift[j];
+		} else{
+			shift[i] = j;
+		}
+	}
+}
+
+vector<int> KMP::matching(const string& text){
 	vector<int> occ;
 	int j = 0;
 	for(int i = 0;i < text.size();i++){
 		while(j > -1 && text[i] != pattern[j]){
-			j = next_table[j];
+			j = shift[j];
 		}
 		j++;
 		if(j >= pattern.size()){
 			occ.push_back(i-j+1);
-			j = next_table[j];
+			j = shift[j];
 		}
 	}
 	return occ;

@@ -9,11 +9,18 @@
 
 using namespace std;
 
-vector<int> MPPreprocess(const string &pattern);
+class KMP{
+	private:
+	vector<int> shift;
+	string pattern;
 
-vector<int> KMPPreprocess(const string &pattern);
-
-vector<int> matching(const string &text, const string& pattern, const vector<int> &Dnext_table);
+	public:
+	KMP();
+	KMP(const string &p);
+	void MPPreprocess(const string &p);
+	void KMPPreprocess(const string &p);
+	vector<int> matching (const string &text);
+};
 
 
 #endif // KMP_H 
