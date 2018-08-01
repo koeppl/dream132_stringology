@@ -1,8 +1,8 @@
 #pragma once
 
-#ifndef KMP_H
+#ifndef __KMP_H__
 
-#define KMP_H
+#define __KMP_H__
 
 #include <string>
 #include <vector>
@@ -23,4 +23,4 @@ class KMP{
 };
 
 
-#endif // KMP_H 
+#endif // __KMP_H__

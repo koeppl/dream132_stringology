@@ -1,8 +1,8 @@
 #pragma once
 
-#ifndef BM_H
+#ifndef __BM_H__
 
-#define BM_H
+#define __BM_H__
 
 #include <algorithm>
 #include <map>
@@ -28,4 +28,4 @@ class BoyerMoore{
 };
 
 
-#endif // BM_H 
+#endif // __BM_H__
