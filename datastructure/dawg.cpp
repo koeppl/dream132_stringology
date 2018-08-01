@@ -2,15 +2,18 @@
 
 DAWG::DAWG(){
 	root = new Node;
-	root->slink = NULL;
+	root->slink = root;
 }
 
 DAWG::DAWG(const string &t){
-
+	root = new Node;
+	root->slink = root;
+	addString(t);
 }
 
 DAWG::Node* DAWG::split(Node* parent, Node* child, char c){
-	Node* new_node;
+	Node* new_node = new Node;
+	new_node->slink = NULL;
 	parent->edges[c] = Edge (new_node,PRIMARY);
 	for(auto it = child->edges.begin();it != child->edges.end();it++){
 		new_node->edges[it->first] = Edge(it->second.first, SECONDARY);
@@ -40,28 +43,29 @@ void DAWG::addString(const string &t){
 		auto it = active_node->edges.find(c);
 		if(it != active_node->edges.end()){
 			if(it->second.second == PRIMARY){
-				active_node = it->first;
+				active_node = it->second.first;
 			} else{
 				active_node = split(active_node, it->second.first, c);
 			}
 		} else{
-			Node* new_node;
+			Node* new_node = new Node;
+			new_node->slink = NULL;
 			Node* current_node = active_node;
 			active_node->edges[c] = Edge(new_node, PRIMARY);
-			while(current_node != NULL){
-				current_node = current_node->suffix_link;
+			while(current_node != root){
+				current_node = current_node->slink;
 				auto it = current_node->edges.find(c);
 				if(it == current_node->edges.end()){
-					it->second = Edge(new_node, SECONDARY);
+					current_node->edges[c] = Edge(new_node, SECONDARY);
 				} else if(it->second.second == PRIMARY){
-					new_node->slink = it->second.second;
+					new_node->slink = it->second.first;
 					break;
 				} else{
 					new_node->slink = split(current_node, it->second.first, c);
 					break;
 				}
 			}
-			if(current_node == NULL){
+			if(new_node->slink == NULL){
 				new_node->slink = root;
 			}
 			active_node = new_node;

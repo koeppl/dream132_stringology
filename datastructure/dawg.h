@@ -5,6 +5,7 @@
 #define __DAWG_H__
 
 #include <algorithm>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
@@ -13,7 +14,6 @@ using namespace std;
 
 class DAWG{
 	private:
-	typedef pair<Node*, bool> Edge;
 	enum
 	{
 		PRIMARY = 0,
@@ -22,10 +22,11 @@ class DAWG{
 	};
 	
 	struct Node{
-		map<char,Edge> edges;
+		map<char, pair<Node*, bool> > edges;
 		Node* slink;
 	};
-	
+	typedef pair<Node*, bool> Edge;
+
 	Node* root;
 	Node* split(Node* parent, Node* child, char c);
 
