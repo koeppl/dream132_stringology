@@ -5,7 +5,6 @@
 #define __BM_H__
 
 #include <algorithm>
-#include <map>
 #include <string>
 #include <vector>
 
@@ -13,7 +12,7 @@ using namespace std;
 
 class BoyerMoore{
 	private:
-	map<char, int> bad_char;
+	int bad_char[256];
 	vector<int> good_suffix;
 	string pattern;
 	
