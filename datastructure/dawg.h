@@ -34,6 +34,7 @@ class DAWG{
 	DAWG();
 	DAWG(const string &t);
 	void addString(const string &t);
+	bool matching(const string &p);
 };
 
 

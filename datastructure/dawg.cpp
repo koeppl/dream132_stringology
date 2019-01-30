@@ -72,3 +72,18 @@ void DAWG::addString(const string &t){
 		}
 	}
 }
+
+bool DAWG::matching(const string &p){
+	int m = p.size();
+	Node* active_node = root;
+	for(int i = 0;i < m;i++){
+		char c = p[i];
+		auto it = active_node->edges.find(c);
+		if(it != active_node->edges.end()){
+			active_node = it->second.first;
+		} else{
+			return false;
+		}
+	}
+	return true;
+}
