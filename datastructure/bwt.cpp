@@ -67,15 +67,15 @@ string BWT::inPlaceIBWT(string T){
 	}
 	p++;
 	while(j < n-2){
-		char c = select(T,p,j);
+		char c = select(T,p-j,j);
 		int count = 0;
 		for(int i = j;i < n;i++){
 			if(T[i] < c){
 				count++;
 			}
 		}
-		int f = p - count;
-		int q = -1;
+		int f = p - count-j;
+		int q = j-1;
 		while(f > 0){
 			q++;
 			if(T[q] == c){
@@ -89,9 +89,9 @@ string BWT::inPlaceIBWT(string T){
 		T[j] = c;
 		j++;
 		if(p - 1 > q){
-			p = q + 1;
+			p = q + 2;
 		}else{
-			p = q;
+			p = q + 1;
 		}
 	}
 	return T;
@@ -102,7 +102,6 @@ char BWT::select(string &T, int rank, int j){
 	char bot = 'a';
 	char top = 'z';
 	while(bot != top){
-		cout << bot << " " << top << endl;
 		char c = (bot + top)/2;
 		int p = 0;
 		int q = 0;
@@ -116,7 +115,7 @@ char BWT::select(string &T, int rank, int j){
 		}
 		if(rank > p && rank <= p+q){
 			return c;
-		}else if(rank < p){
+		}else if(rank <= p){
 			top = c;
 		}else{
 			bot = c+1;
