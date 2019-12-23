@@ -22,6 +22,8 @@ public:
 	string naiveBWT(string T);
 	string linearTimeBWT(string T);
 	string inPlaceBWT(string T);
+	string inPlaceIBWT(string T);
+	char select(string &T, int rank, int j);
 };
 
 #endif // __BWT_H__

@@ -32,18 +32,17 @@ string BWT::linearTimeBWT(string T){
 }
 
 string BWT::inPlaceBWT(string T){
-	int i, p, r;
-	char c;
+	int i;
 	int n = T.size();
 	for(int s = n - 3;s >= 0;s--){ 
-		c = T[s];
- 		r = s; 
+		char c = T[s];
+ 		int r = s; 
 		for(i = s + 1;T[i] != '$';i++){
 			if(T[i] <= c){
 				r++;
 			}
 		}
-		p = i;
+		int p = i;
  		while(i < n) {
 	 		if(T[i] < c){
 				 r++;
@@ -57,4 +56,70 @@ string BWT::inPlaceBWT(string T){
 		T[r] = '$';
 	}
 	return T;
+}
+
+string BWT::inPlaceIBWT(string T){
+	int n = T.size();
+	int j = 0;
+	int p = 0;
+	while(T[p] != '$'){
+		p++;
+	}
+	p++;
+	while(j < n-2){
+		char c = select(T,p,j);
+		int count = 0;
+		for(int i = j;i < n;i++){
+			if(T[i] < c){
+				count++;
+			}
+		}
+		int f = p - count;
+		int q = -1;
+		while(f > 0){
+			q++;
+			if(T[q] == c){
+				f--;
+			}
+		}
+		T[q] = '$';
+		for(int i = p - 1;i > j;i--){
+			T[i] = T[i-1];
+		}
+		T[j] = c;
+		j++;
+		if(p - 1 > q){
+			p = q + 1;
+		}else{
+			p = q;
+		}
+	}
+	return T;
+}
+
+char BWT::select(string &T, int rank, int j){
+	int n = T.size();
+	char bot = 'a';
+	char top = 'z';
+	while(bot != top){
+		cout << bot << " " << top << endl;
+		char c = (bot + top)/2;
+		int p = 0;
+		int q = 0;
+		for(int i = j;i < n;i++){
+			if(c > T[i]){
+				p++;
+			}
+			if(c == T[i]){
+				q++;
+			}
+		}
+		if(rank > p && rank <= p+q){
+			return c;
+		}else if(rank < p){
+			top = c;
+		}else{
+			bot = c+1;
+		}
+	}
 }
