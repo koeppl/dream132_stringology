@@ -97,6 +97,58 @@ string BWT::inPlaceIBWT(string T){
 	return T;
 }
 
+string BWT::inPlaceBWTnew(string T){
+	int n = T.size();
+	pair<string, int> necklace = findNecklace(T);
+	cout << necklace.first << " " << necklace.second << endl;
+	T = necklace.first;
+	char ch = T[n - 1];
+	T[n - 1] = T[n - 2];
+	T[n - 2] = ch;
+	cout << "1 " << T.substr(0,n-2) << "|" << T.substr(n-2) << endl;
+	cout << endl;
+	int lastpos = n-1;
+	int lastchar = T[n-1];
+	for(int i = n - 2;i > 0;i--){
+		cout << "lastpos = " << lastpos << endl;
+		cout << "lastchar = " << lastchar << endl;
+		cout << "startpos = " << i << endl;
+		int c = 0;
+		for(int j = i;j < n;j++){
+			if(T[j] < lastchar){
+				c++;
+			}
+		}
+		int rank = 0;
+		for(int j = i;j < lastpos;j++){
+			if(T[j] == lastchar){
+				c++;
+			}
+		}
+		lastpos = i + c + rank;
+		lastchar = T[i-1];
+		for(int j = i-1;j < lastpos;j++){
+			T[j] = T[j+1];
+		}
+		T[lastpos] = lastchar;
+		cout << n-i+1 << " " << T.substr(0,i-1) << "|" << T.substr(i-1) << endl;
+		cout << endl;
+	}
+	return "";
+}
+
+pair<string,int> BWT::findNecklace(string &T){
+	int n = T.size();
+	vector<string> rotation;
+	for (int i = 0;i < n;i++){
+		string num = "0";
+		num[0] += i;
+		rotation.push_back(T.substr(i) + T.substr(0,i) + num);
+	}
+	sort(rotation.begin(),rotation. end());
+	return pair<string, int>(rotation[0].substr(0,n), rotation[0][n]-'0');
+}
+
 char BWT::select(string &T, int rank, int j){
 	int n = T.size();
 	char bot = 'a';
