@@ -22,8 +22,8 @@ public:
 	string naiveBWT(string T);
 	string linearTimeBWT(string T);
 	string inPlaceBWT(string T);
-	string inPlaceBWTnew(string T);
 	string inPlaceIBWT(string T);
+	string inPlaceBWTnew(string T);
 	pair<string,int> findNecklace(string &T);
 	char select(string &T, int rank, int j);
 };
