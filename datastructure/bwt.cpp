@@ -110,9 +110,6 @@ string BWT::inPlaceBWTnew(string T){
 	int lastpos = n-1;
 	int lastchar = T[n-1];
 	for(int i = n - 2;i > 0;i--){
-		cout << "lastpos = " << lastpos << endl;
-		cout << "lastchar = " << lastchar << endl;
-		cout << "startpos = " << i << endl;
 		int c = 0;
 		for(int j = i;j < n;j++){
 			if(T[j] < lastchar){
@@ -133,6 +130,30 @@ string BWT::inPlaceBWTnew(string T){
 		T[lastpos] = lastchar;
 		cout << n-i+1 << " " << T.substr(0,i-1) << "|" << T.substr(i-1) << endl;
 		cout << endl;
+	}
+	return "";
+}
+
+string BWT::inPlaceIBWTnew(string T, int lastpos){
+	int n = T.size();
+	int lastchar = T[lastpos];
+	int startpos = 0;
+	for(int i = 0;i < n;i++){
+		int c = 0;
+		for(int j = startpos;j < n;j++){
+			if(T[j] < lastchar){
+				c++;
+			}
+		}
+		int rank = 0;
+		for(int j = startpos;j < lastpos;j++){
+			if(T[j] == lastchar){
+				c++;
+			}
+		}
+		int firstpos = c + rank;
+		
+		
 	}
 	return "";
 }

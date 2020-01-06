@@ -24,6 +24,7 @@ public:
 	string inPlaceBWT(string T);
 	string inPlaceIBWT(string T);
 	string inPlaceBWTnew(string T);
+	string inPlaceIBWTnew(string T, int pos);
 	pair<string,int> findNecklace(string &T);
 	char select(string &T, int rank, int j);
 };
