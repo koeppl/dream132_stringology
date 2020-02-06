@@ -119,7 +119,7 @@ string BWT::inPlaceBWTnew(string T){
 		int rank = 0;
 		for(int j = i;j < lastpos;j++){
 			if(T[j] == lastchar){
-				c++;
+				rank++;
 			}
 		}
 		lastpos = i + c + rank;
@@ -131,7 +131,7 @@ string BWT::inPlaceBWTnew(string T){
 		cout << n-i+1 << " " << T.substr(0,i-1) << "|" << T.substr(i-1) << endl;
 		cout << endl;
 	}
-	return "";
+	return T;
 }
 
 string BWT::inPlaceIBWTnew(string T, int lastpos){
