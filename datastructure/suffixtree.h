@@ -29,25 +29,25 @@ class UkkonenSTree {
     };
 
     struct Node {
-        map<char, Edge> edges;
+        map<char, Edge *> edges;
         Node *slink;
     };
 
     struct Point {
-        Node *nd;
-        Edge *eg;
+        Node *node;
+        Edge *edge;
         int l;
         Point();
-        Point(Node *a, Edge *b, int c) {
-            nd = a;
-            eg = b;
+        Point(Node *nd, Edge *eg, int c) {
+            node = nd;
+            edge = eg;
             l = c;
         }
     };
 
     // typedef pair<Node *, bool> Edge;
 
-    pair<Node *, int> active_point;
+    Point active_point;
 
     string T;
     Node *root;
