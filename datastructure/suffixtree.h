@@ -52,6 +52,7 @@ class UkkonenSTree {
     string T;
     Node *root;
     Edge *aux;
+    int next_leaf;
     Node *split(Node *parent, Node *child, char c);
     Point readEdge(Point ap, char c);
     void addPrefix(int pos);
