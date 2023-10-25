@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <queue>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -37,7 +39,7 @@ class UkkonenSTree {
         Node *node;
         Edge *edge;
         int l;
-        Point();
+        Point(){};
         Point(Node *nd, Edge *eg, int c) {
             node = nd;
             edge = eg;
@@ -62,8 +64,7 @@ class UkkonenSTree {
     UkkonenSTree(const string &t);
     void addString(const string &t);
     bool matching(const string &p);
-
-  public:
-}
+    void printTree();
+};
 
 #endif // __SUFFIXTREE_H__
