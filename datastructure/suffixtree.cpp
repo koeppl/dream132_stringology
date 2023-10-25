@@ -71,6 +71,7 @@ void UkkonenSTree::addPrefix(int pos) {
                 Edge *new_edge_to_node =
                     new Edge(active_point.edge->start + active_point.l,
                              active_point.edge->end, new_leaf);
+                int depth = active_point.l;
 
                 // split edge and add leaf
                 new_node->edges[c] = new_edge_to_leaf;
@@ -85,7 +86,16 @@ void UkkonenSTree::addPrefix(int pos) {
 
                 // next_active_point
                 if (active_point.node == root) {
-                    next_ap.node = root;
+                    char d = T[active_point.edge->start + 1];
+                    depth--;
+                    Node *temp = root;
+                    while (temp->edges[d]->end - temp->edges[d]->start <
+                           depth) {
+                        temp = temp->edges[d]->child;
+                        depth -=
+                            temp->edges[d]->end - temp->edges[d]->start + 1;
+                    }
+
                     next_ap.node = root;
 
                     next_ap = active_point;
