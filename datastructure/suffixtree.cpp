@@ -142,6 +142,26 @@ void UkkonenSTree::addString(const string &t) {
     T += t;
     addPrefix(T.size() - t.size());
 }
+
+pair<int, int> UkkonenSTree::matching(const string &p) {
+    pair<int, int> ans = pair<int, int>(0, 0);
+    Point pt(root, NULL, 0);
+    for (int i = 0; i < p.size(); i++) {
+        char c = p[i];
+        Point next_ap = readEdge(active_point, c);
+        if (next_ap.node == NULL) {
+            return ans;
+        }
+        ans.first++;
+        if (pt.edge != NULL) {
+            ans.second = pt.edge->start + pt.l;
+        } else {
+            ans.second = pt.node->edges[c]->start;
+        }
+    }
+    return ans;
+}
+
 void UkkonenSTree::printTree() {
     stack<Node *> st;
     st.push(root);

@@ -63,7 +63,7 @@ class UkkonenSTree {
     UkkonenSTree();
     UkkonenSTree(const string &t);
     void addString(const string &t);
-    bool matching(const string &p);
+    pair<int, int> matching(const string &p);
     void printTree();
 };
 
