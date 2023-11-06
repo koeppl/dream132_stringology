@@ -33,6 +33,10 @@ class UkkonenSTree {
     struct Node {
         map<char, Edge *> edges;
         Node *slink;
+        Edge *parent;
+        Node() {
+            slink = NULL;
+        }
     };
 
     struct Point {
@@ -54,6 +58,8 @@ class UkkonenSTree {
     string T;
     Node *root;
     Edge *aux;
+    Node *start_leaf;
+    Node *last_leaf;
     int next_leaf;
     Node *split(Node *parent, Node *child, char c);
     Point readEdge(Point ap, char c);
@@ -63,7 +69,9 @@ class UkkonenSTree {
     UkkonenSTree();
     UkkonenSTree(const string &t);
     void addString(const string &t);
+    void terminal();
     pair<int, int> matching(const string &p);
+    pair<int, int> matching(const string &p, int start);
     void printTree();
 };
 
