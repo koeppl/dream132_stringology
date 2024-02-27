@@ -24,4 +24,5 @@ int main() {
   const auto ret = is_galois(text);
   DCHECK_EQ(ret, is_galois_naive(text));
   std::cout << ret;
+  return 0;
 }
