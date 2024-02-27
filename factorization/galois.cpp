@@ -62,7 +62,7 @@ bool galoisCompRev(string a, string b) {
     if (i % 2 == 0) {
       if (a[i % a.size()] > b[i % b.size()]) {
         return true;
-      } else if (a[i] % a.size() < b[i % b.size()]) {
+      } else if (a[i % a.size()] < b[i % b.size()]) {
         return false;
       }
     } else {
