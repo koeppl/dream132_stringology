@@ -21,30 +21,26 @@ int computePeriod(const string& p) {
 }
 
 bool galoisComp(string a, string b) {
-  int n = min(a.size(), b.size());
+  const size_t n = 2*std::max(a.size(), b.size());
   if (a == b) {
     return false;
   }
-  bool flag = true;
-  int i = 0;
-  while (flag) {
+  for (size_t i = 0; i < n; i++) {
     if (i % 2 == 0) {
       if (a[i % a.size()] > b[i % b.size()]) {
         return false;
-      } else if (a[i] % a.size() < b[i % b.size()]) {
+      } else if (a[i % a.size()] < b[i % b.size()]) {
         return true;
       }
     } else {
-      if (a[i % a.size()] < b[i]) {
+      if (a[i % a.size()] < b[i % b.size()]) {
         return false;
       } else if (a[i % a.size()] > b[i % b.size()]) {
         return true;
       }
     }
   }
-
-  for (int i = 0; i < n; i++) {
-  }
+  // should be a dead end unless one string is a repetition of the other
   if (n == a.size()) {
     return false;
   }
@@ -62,7 +58,7 @@ bool galoisCompRev(string a, string b) {
     if (i % 2 == 0) {
       if (a[i % a.size()] > b[i % b.size()]) {
         return true;
-      } else if (a[i % a.size()] < b[i % b.size()]) {
+      } else if (a[i] % a.size() < b[i % b.size()]) {
         return false;
       }
     } else {
