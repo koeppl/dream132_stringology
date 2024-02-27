@@ -133,8 +133,4 @@ bool galois_comp(const std::string& a, const std::string& b) {
     }
   }
   throw std::runtime_error(std::string("Input seems not to be primitive: ") + a + " <-> " + b);
-  if(n == a.size()) {
-    return false;
-  }
-  return true;
 }
