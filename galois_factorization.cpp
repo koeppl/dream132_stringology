@@ -1,14 +1,6 @@
 #include "common.hpp"
 #include "dcheck.hpp"
 
-constexpr bool odd_less(const char& a, const char& b) {
-  return a < b;
-}
-
-constexpr bool even_less(const char& a, const char& b) {
-  return a > b;
-}
-
 std::vector<std::string> galois_factorization(const std::string& s) {
   if(s.find('\0') != std::string::npos) {
     throw std::runtime_error(std::string("input string must not contain NULL byte"));
@@ -87,8 +79,21 @@ bool check_factorization(const std::vector<std::string> factor) {
   }
   return true;
 }
+#include <fstream>
+
 
 int main(int argc, char *argv[]) {
+  if(argc > 2 && std::string(argv[1]) == "-i") {
+    std::ifstream f(argv[2], std::ios::binary);
+    const auto factors = galois_factorization(read_input(f));
+    DCHECK(check_factorization(factors));
+    if(argc > 3 && std::string(argv[3]) == "count") {
+      std::cout << factors.size();
+    } else {
+      showFactorization(factors);
+    }
+    return 0;
+  }
   const auto factors = galois_factorization(read_input());
   DCHECK(check_factorization(factors));
   if(argc > 1 && std::string(argv[1]) == "count") {

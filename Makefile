@@ -3,7 +3,7 @@ all: $(TARGET)
 CXX = g++
 MYCXXFLAGS  = -ggdb -Wall -pedantic -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -std=gnu++11
 
-%.x : %.cpp
+%.x : %.cpp common.hpp
 	$(CXX) $(MYCXXFLAGS) $(CXXFLAGS) -o $@ $<
 
 clean:
