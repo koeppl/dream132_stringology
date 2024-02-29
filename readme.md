@@ -11,8 +11,8 @@ Example Usage:
 ```bash
 echo -n 'aba' | ./is_galois.x
 echo -n 'baa' | ./is_galois.x
-echo -n 'baa' | galois_rotation.x
-echo -n 'baa' | galois_factorization.x
+echo -n 'baa' | ./galois_rotation.x
+echo -n 'baa' | ./galois_factorization.x
 ```
 
 Per default, all programs check their output. 

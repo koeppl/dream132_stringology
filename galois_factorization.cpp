@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "dcheck.hpp"
 
+
 std::vector<std::string> galois_factorization(const std::string& s) {
   if(s.find('\0') != std::string::npos) {
     throw std::runtime_error(std::string("input string must not contain NULL byte"));
@@ -10,45 +11,26 @@ std::vector<std::string> galois_factorization(const std::string& s) {
   std::vector<std::string> ans;
   size_t i = 0;
   while (i < text.size() - 1) {
-    size_t po = 1;
-    size_t pe = 2;
+    period_pair per; 
+    per.o = 1; per.e = 2;
     for (size_t j = 1; j < text.size() - i; j++) {
-      const bool is_odd = (j % 2 == 0);
-      auto smaller_than = is_odd ? odd_less : even_less;
-
       size_t p = text.size() + 1;
-      size_t pe2 = pe;
-      size_t po2 = po;
-      if (pe <= j) {
-        if (smaller_than(text[i + j], text[i + j - pe])) {
-          p = std::min(p, pe);
-        } else if (smaller_than(text[i + j - pe], text[i + j])) {
-          pe2 = j + 1 + (is_odd ? 1 : 0);
-        }
-      }
-      if (po <= j) {
-        if (smaller_than(text[i + j], text[i + j - po])) {
-          po2 = j + 1 + (is_odd ? 0 : 1);
-        } else if (smaller_than(text[i + j - po], text[i + j])) {
-          p = std::min(p, po);
-        }
-      }
+      const auto newper = galois_step(text, i, j, per, p);
       if (p != text.size() + 1) {
         while (j >= p) {
-          if (p == pe && pe == 2 * po) {
-            ans.push_back(text.substr(i, po));
-            ans.push_back(text.substr(i + po, po));
+          if (p == per.e && per.e == 2 * per.o) {
+            ans.push_back(text.substr(i, per.o));
+            ans.push_back(text.substr(i + per.o, per.o));
           } else {
             ans.push_back(text.substr(i, p));
           }
           i += p;
           j -= p;
-          p = pe;
+          p = per.e;
         }
         j = text.size();
       }
-      pe = pe2;
-      po = po2;
+      per = newper;
     }
   }
   return ans;

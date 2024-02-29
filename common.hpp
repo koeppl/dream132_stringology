@@ -7,6 +7,7 @@
 #include <array>
 #include <cstring>
 
+
 constexpr bool odd_less(const unsigned char& a, const unsigned char& b) {
   return a < b;
 }
@@ -91,4 +92,30 @@ bool galois_comp(const std::string& a, const std::string& b) {
     }
   }
   throw std::runtime_error(std::string("Input seems not to be primitive: ") + a + " <-> " + b);
+}
+
+struct period_pair {
+  size_t o, e;
+};
+
+period_pair galois_step(const std::string& text, size_t i, size_t j, const period_pair& per, size_t& p) {
+  const bool is_odd = (j % 2 == 0);
+  const auto smaller_than = is_odd ? odd_less : even_less;
+  const size_t n = text.size();
+  period_pair newper = per;
+  if(per.e <= j) {
+    if(smaller_than(text[(i + j) % n], text[(i + j - per.e) % n])) {
+      p = std::min(p, per.e);
+    } else if (smaller_than(text[(i + j - per.e) % n], text[(i + j) % n])) {
+      newper.e = j + 1 + (is_odd ? 1 : 0);
+    }
+  }
+  if (per.o <= j) {
+    if (smaller_than(text[(i + j) % n], text[(i + j - per.o) % n])) {
+      newper.o = j + 1 + (is_odd ? 0 : 1);
+    } else if (smaller_than(text[(i + j - per.o) % n], text[(i + j) % n])) {
+      p = std::min(p, per.o);
+    }
+  }
+  return newper;
 }
